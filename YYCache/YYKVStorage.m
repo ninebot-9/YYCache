@@ -117,6 +117,12 @@ static UIApplication *_YYSharedApplication() {
     }
 }
 
+/// correct sqllite statements finalization
+/// reference: https://github.com/ibireme/YYCache/pull/163/commits/f1008591a9f01a8ce3ac5cbd45a2bae458093e40
+static void _finalizeStatement(const void *key, const void *value, void *context) {
+    sqlite3_finalize((sqlite3_stmt *)value);
+}
+
 - (BOOL)_dbClose {
     if (!_db) return YES;
     
@@ -124,7 +130,12 @@ static UIApplication *_YYSharedApplication() {
     BOOL retry = NO;
     BOOL stmtFinalized = NO;
     
-    if (_dbStmtCache) CFRelease(_dbStmtCache);
+    /// reference: https://github.com/ibireme/YYCache/pull/163/commits/f1008591a9f01a8ce3ac5cbd45a2bae458093e40
+    /// if (_dbStmtCache) CFRelease(_dbStmtCache);
+    if (_dbStmtCache) {
+        CFDictionaryApplyFunction(_dbStmtCache, _finalizeStatement, NULL);
+        CFRelease(_dbStmtCache);
+    }
     _dbStmtCache = NULL;
     
     do {
