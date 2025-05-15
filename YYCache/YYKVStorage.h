@@ -13,6 +13,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+FOUNDATION_EXPORT NSNotificationName const YYKVStorageErrorNotification NS_SWIFT_NAME(YYStorageErrorNotification);
+
 /**
  YYKVStorageItem is used by `YYKVStorage` to store key-value pair and meta data.
  Typically, you should not use this class directly.
