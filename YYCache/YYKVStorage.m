@@ -272,10 +272,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_DONE) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite insert error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                      @"path": _dbPath ?: @"",
-                                      @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                      @"line": @(__LINE__),
-                                      @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"key": key ?: @""}];
         return NO;
     }
     return YES;
@@ -291,10 +292,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_DONE) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite update error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                      @"path": _dbPath ?: @"",
-                                      @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                      @"line": @(__LINE__),
-                                      @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"key": key ?: @""}];
         return NO;
     }
     return YES;
@@ -310,10 +312,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_OK) {
         if (_errorLogsEnabled)  NSLog(@"%s line:%d sqlite stmt prepare error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                      @"path": _dbPath ?: @"",
-                                      @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                      @"line": @(__LINE__),
-                                      @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"keys": [self _dbJoinedKeys:keys] ?: @""}];
         return NO;
     }
     
@@ -323,10 +326,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_DONE) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite update error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"keys": [self _dbJoinedKeys:keys] ?: @""}];
         return NO;
     }
     return YES;
@@ -342,10 +346,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_DONE) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d db delete error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"key": key ?: @""}];
         return NO;
     }
     return YES;
@@ -359,10 +364,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_OK) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite stmt prepare error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"keys": [self _dbJoinedKeys:keys] ?: @""}];
         return NO;
     }
     
@@ -372,10 +378,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result == SQLITE_ERROR) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite delete error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"keys": [self _dbJoinedKeys:keys] ?: @""}];
         return NO;
     }
     return YES;
@@ -454,10 +461,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
         if (result != SQLITE_DONE) {
             if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite query error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
             [self trackErrorLog:@{@"result": @(result),
-                                         @"path": _dbPath ?: @"",
-                                         @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                         @"line": @(__LINE__),
-                                         @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                                  @"path": _dbPath ?: @"",
+                                  @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                                  @"line": @(__LINE__),
+                                  @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                                  @"key": key ?: @""}];
         }
     }
     return item;
@@ -477,10 +485,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_OK) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite stmt prepare error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"keys": [self _dbJoinedKeys:keys] ?: @""}];
         return nil;
     }
     
@@ -496,10 +505,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
         } else {
             if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite query error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
             [self trackErrorLog:@{@"result": @(result),
-                                         @"path": _dbPath ?: @"",
-                                         @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                         @"line": @(__LINE__),
-                                         @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                                  @"path": _dbPath ?: @"",
+                                  @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                                  @"line": @(__LINE__),
+                                  @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                                  @"keys": [self _dbJoinedKeys:keys] ?: @""}];
             items = nil;
             break;
         }
@@ -524,10 +534,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
         if (result != SQLITE_DONE) {
             if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite query error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
             [self trackErrorLog:@{@"result": @(result),
-                                         @"path": _dbPath ?: @"",
-                                         @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                         @"line": @(__LINE__),
-                                         @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                                  @"path": _dbPath ?: @"",
+                                  @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                                  @"line": @(__LINE__),
+                                  @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                                  @"key": key ?: @""}];
         }
         return nil;
     }
@@ -548,10 +559,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
         if (result != SQLITE_DONE) {
             if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite query error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
             [self trackErrorLog:@{@"result": @(result),
-                                         @"path": _dbPath ?: @"",
-                                         @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                         @"line": @(__LINE__),
-                                         @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                                  @"path": _dbPath ?: @"",
+                                  @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                                  @"line": @(__LINE__),
+                                  @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                                  @"key": key ?: @""}];
         }
     }
     return nil;
@@ -565,10 +577,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_OK) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite stmt prepare error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"keys": [self _dbJoinedKeys:keys] ?: @""}];
         return nil;
     }
     
@@ -587,10 +600,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
         } else {
             if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite query error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
             [self trackErrorLog:@{@"result": @(result),
-                                         @"path": _dbPath ?: @"",
-                                         @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                         @"line": @(__LINE__),
-                                         @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                                  @"path": _dbPath ?: @"",
+                                  @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                                  @"line": @(__LINE__),
+                                  @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                                  @"keys": [self _dbJoinedKeys:keys] ?: @""}];
             filenames = nil;
             break;
         }
@@ -707,10 +721,11 @@ static void _finalizeStatement(const void *key, const void *value, void *context
     if (result != SQLITE_ROW) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite query error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         [self trackErrorLog:@{@"result": @(result),
-                                     @"path": _dbPath ?: @"",
-                                     @"func": [NSString stringWithUTF8String:__FUNCTION__],
-                                     @"line": @(__LINE__),
-                                     @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @""}];
+                              @"path": _dbPath ?: @"",
+                              @"func": [NSString stringWithUTF8String:__FUNCTION__],
+                              @"line": @(__LINE__),
+                              @"msg": sqlite3_errmsg(_db) ? [NSString stringWithUTF8String:sqlite3_errmsg(_db)] : @"",
+                              @"key": key ?: @""}];
         return -1;
     }
     return sqlite3_column_int(stmt, 0);
